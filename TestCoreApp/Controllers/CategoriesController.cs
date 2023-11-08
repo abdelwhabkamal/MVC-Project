@@ -10,9 +10,11 @@ namespace TestCoreApp.Controllers
         public CategoriesController(IRepository<Category> repository ) {
             _categoryRepository = repository;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(_categoryRepository.GetAll());
+            var OneCat = _categoryRepository.SelectOne(x=>x.Name=="Computers");
+            var AllCat = await _categoryRepository.GetAllAsync("Items");
+            return View( AllCat);
         }
     }
 }
