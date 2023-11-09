@@ -9,7 +9,7 @@ namespace TestCoreApp.Repository.Base
     public interface IUnitOfWork : IDisposable
     {
         IRepository<Category> categories {  get; }
-        IRepository<Employee> employees { get; }
+        IEmpRepo employees { get; }
         IRepository<Item> items { get; }
         int CommitChanges();
     }
