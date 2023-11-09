@@ -9,6 +9,17 @@ namespace TestCoreApp.Repository.Base
         T SelectOne(Expression<Func<T, bool>> match);
         Task<IEnumerable<T>> GetAllAsync();
         Task<IEnumerable<T>> GetAllAsync(params string[] eagers);
+        void AddOne(T myItem);
+
+        void UpdateOne(T myItem);
+
+        void DeleteOne(T myItem);
+
+        void AddList(IEnumerable<T> myList);
+
+        void UpdateList(IEnumerable<T> myList);
+
+        void DeleteList(IEnumerable<T> myList);
 
     }
 }

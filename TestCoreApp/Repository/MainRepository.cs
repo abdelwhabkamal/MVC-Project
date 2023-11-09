@@ -41,5 +41,41 @@ namespace TestCoreApp.Repository
             }
             return await query.ToListAsync();
         }
+
+        public void AddOne(T myItem)
+        {
+            _context.Set<T>().Add(myItem);
+            _context.SaveChanges();
+        }
+
+        public void UpdateOne(T myItem)
+        {
+            _context.Set<T>().Update(myItem);
+            _context.SaveChanges();
+        }
+
+        public void DeleteOne(T myItem)
+        {
+            _context.Set<T>().Remove(myItem);
+            _context.SaveChanges();
+        }
+
+        public void AddList(IEnumerable<T> myList)
+        {
+            _context.Set<T>().AddRange(myList);
+            _context.SaveChanges();
+        }
+
+        public void UpdateList(IEnumerable<T> myList)
+        {
+            _context.Set<T>().UpdateRange(myList);
+            _context.SaveChanges();
+        }
+
+        public void DeleteList(IEnumerable<T> myList)
+        {
+            _context.Set<T>().RemoveRange(myList);
+            _context.SaveChanges();
+        }
     }
 }

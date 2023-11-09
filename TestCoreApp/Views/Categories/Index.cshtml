@@ -10,6 +10,11 @@
         <div class="col-6">
             <h2 class="text-primary">Categories View</h2>
         </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Categories" asp-action="New" class="btn btn-primary">
+                <i class="bi bi-plus"></i> &nbsp; Add New Category
+            </a>
+        </div>
     </div>
 
     <table class="table table-hover">
@@ -23,11 +28,20 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var cat in Model)
             {
                 <tr class="table-primary">
                     <td scope="row" width="30%">
-                        @item.Name
+                        @cat.Name
+                    </td>
+                    <td>
+                        <a asp-controller="Categories" asp-action="Edit" asp-route-Id="@cat.Id" class="btn btn-sm btn-success">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                        &nbsp;
+                        <a asp-controller="Categories" asp-action="Delete" asp-route-Id="@cat.Id" class="btn btn-sm btn-danger">
+                            <i class="bi bi-trash3"></i>
+                        </a>
                     </td>
                 </tr>
             }
