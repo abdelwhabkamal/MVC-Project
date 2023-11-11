@@ -17,11 +17,16 @@ namespace TestCoreApp.Models
         public decimal Price { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.Now;
 
+        public string? ImageUrl { get; set; }
+        //NotMapped to dont migrate into database
+        //IformFile Interface to get full information of file that will be uploaded
+        [NotMapped]
+        public IFormFile clientFile { get; set; }
         [Required]
         [DisplayName("Category")]
         [ForeignKey("Category")]
         public int CategoryId { get; set; }
-
+        
         public Category? Category { get; set; }
     }
 }

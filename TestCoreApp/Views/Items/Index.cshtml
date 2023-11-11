@@ -48,6 +48,9 @@
                         @item.Category.Name
                     </td>
                     <td>
+                        <img src="~/images/@item.ImageUrl" style="width:48px" class="img-thumbnail" />
+                    </td>
+                    <td>
                         <a asp-controller="Items" asp-action="Edit" asp-route-Id="@item.Id" class="btn btn-sm btn-success">
                             <i class="bi bi-pencil"></i>
                         </a>

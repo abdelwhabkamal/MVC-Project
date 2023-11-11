@@ -3,16 +3,20 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TestCoreApp.Data;
 using TestCoreApp.Models;
+using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
+
 
 namespace TestCoreApp.Controllers
 {
     public class ItemsController : Controller
     {
-        public ItemsController(AppDbContext db)
+        public ItemsController(AppDbContext db, IHostingEnvironment host)
         {
             _db = db;
-        }   
-        
+            _host= host;
+        }
+        private readonly IHostingEnvironment _host;
+
         private readonly AppDbContext _db;
 
         public IActionResult Index()
@@ -25,7 +29,7 @@ namespace TestCoreApp.Controllers
         public IActionResult New()
         {
             createSelectList();
-            return View(); 
+            return View();
         }
 
         //POST
@@ -37,8 +41,18 @@ namespace TestCoreApp.Controllers
             {
                 ModelState.AddModelError("Name", "Name can't equal 100");
             }
+            string fileName = string.Empty;
             if (ModelState.IsValid)
             {
+                if (item.clientFile != null)
+                {
+
+                    string myUpload = Path.Combine(_host.WebRootPath, "images");
+                    fileName = item.clientFile.FileName;
+                    string fullPath = Path.Combine(myUpload, fileName);
+                    item.clientFile.CopyTo(new FileStream(fullPath, FileMode.Create));
+                    item.ImageUrl = fileName;
+                }
                 _db.Items.Add(item);
                 _db.SaveChanges();
                 TempData["successData"] = "Item has been added successfully";
@@ -128,7 +142,7 @@ namespace TestCoreApp.Controllers
                 return NotFound();
             }
             _db.Remove(item);
-           _db.SaveChanges();
+            _db.SaveChanges();
             TempData["successData"] = "Item has been deleted successfully";
             return RedirectToAction("Index");
         }
