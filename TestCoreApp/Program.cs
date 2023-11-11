@@ -4,6 +4,7 @@ using System.ComponentModel;
 using TestCoreApp.Data;
 using TestCoreApp.Repository;
 using TestCoreApp.Repository.Base;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 // builder.Services: This typically refers to an instance of IServiceCollection used for configuring services and dependencies in an ASP.NET Core application. It's part of the DI container configuration.
@@ -12,6 +13,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("MyConnection")
     ));
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<AppDbContext>();
 // "transient" service means that a new instance of the service will be created every time it is requested
 
 //builder.Services.AddTransient(typeof(IRepository<>), typeof(MainRepository<>));
