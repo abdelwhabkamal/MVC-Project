@@ -1,15 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using TestCoreApp.Models;
 using TestCoreApp.Repository.Base;
 
 namespace TestCoreApp.Controllers
 {
+    [Authorize]
     public class CategoriesController : Controller
     {
         private IUnitOfWork _unit;
         public CategoriesController(IUnitOfWork unit) {
             _unit=unit;
         }
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var OneCat = _unit.categories.SelectOne(x=>x.Name=="Computers");

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TestCoreApp.Data;
@@ -8,6 +9,7 @@ using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 namespace TestCoreApp.Controllers
 {
+    [Authorize]
     public class ItemsController : Controller
     {
         public ItemsController(AppDbContext db, IHostingEnvironment host)
@@ -18,7 +20,7 @@ namespace TestCoreApp.Controllers
         private readonly IHostingEnvironment _host;
 
         private readonly AppDbContext _db;
-
+        [AllowAnonymous]
         public IActionResult Index()
         {
             IEnumerable<Item> itemsList = _db.Items.Include(c => c.Category).ToList();
